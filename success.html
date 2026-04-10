@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Success</title>
+<title>Payment Success</title>
 
 <style>
 body{
@@ -15,28 +15,32 @@ body{
   padding:40px;
 }
 .btn{
+  margin-top:20px;
   padding:14px;
-  background:#38bdf8;
+  width:250px;
+  background:#22c55e;
   border:none;
   border-radius:8px;
   font-weight:bold;
+  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Payment Successful</h1>
+<h1>✅ Payment Successful</h1>
+<p>You now have unlimited access</p>
 
-<p>You're now unlocked. Enjoy unlimited access.</p>
-
-<a href="/tools/lead-reply.html">
-  <button class="btn">Go to Tool</button>
-</a>
+<button class="btn" onclick="goToApp()">Go to Tool</button>
 
 <script>
 // 🔓 UNLOCK USER
-localStorage.setItem('paid', 'true');
+localStorage.setItem("paid", "true");
+
+function goToApp(){
+  window.location.href = "/";
+}
 </script>
 
 </body>
