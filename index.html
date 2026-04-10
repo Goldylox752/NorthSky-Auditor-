@@ -1,213 +1,232 @@
 <script>
 // =============================
-// 🔐 GLOBAL STATE
+// 🌌 NORTHSKY CORE ENGINE
 // =============================
-let state = {
-  paid: false,
-  uses: parseInt(localStorage.getItem("uses") || "0"),
-  email: localStorage.getItem("userEmail") || null
+const NorthSky = {
+  state: {
+    paid: false,
+    uses: parseInt(localStorage.getItem("ns_uses") || "0"),
+    email: localStorage.getItem("ns_email") || null
+  },
+
+  config: {
+    freeLimit: 3,
+    checkout: {
+      "one-time": "https://buy.stripe.com/cNi6oA1eraKU7ZR1QQ2ZO0u",
+      "monthly": "https://buy.stripe.com/00w8wIg9lf1a0xpbrq2ZO0v"
+    }
+  }
 };
 
 // =============================
-// 🔄 INIT
+// 🚀 INIT
 // =============================
-init();
+NorthSky.init = async function () {
+  this.updateStatus();
 
-async function init() {
-  updateStatus();
-  if (state.email) await checkAccess();
-}
+  if (this.state.email) {
+    await this.checkAccess();
+  }
+};
 
 // =============================
-// 🔐 CHECK ACCESS (BACKEND)
+// 🔐 ACCESS CHECK
 // =============================
-async function checkAccess() {
+NorthSky.checkAccess = async function () {
   try {
     const res = await fetch("/api/check-user", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ email: state.email })
+      body: JSON.stringify({ email: this.state.email })
     });
 
     const data = await res.json();
-    state.paid = data?.paid || false;
+    this.state.paid = !!data?.paid;
 
   } catch (err) {
     console.error("Access check failed:", err);
-    state.paid = false;
+    this.state.paid = false;
   }
 
-  updateStatus();
-}
+  this.updateStatus();
+};
 
 // =============================
 // 📊 STATUS UI
 // =============================
-function updateStatus() {
+NorthSky.updateStatus = function () {
   const el = document.getElementById("usageStatus");
+  if (!el) return;
 
-  if (state.paid) {
-    el.innerHTML = "✅ Pro User — Unlimited Access";
+  if (this.state.paid) {
+    el.innerHTML = "✅ Pro — Unlimited Access";
   } else {
-    const remaining = Math.max(0, 3 - state.uses);
-    el.innerHTML = `⚠️ Free Plan — ${remaining} analyses left`;
+    const remaining = Math.max(0, this.config.freeLimit - this.state.uses);
+    el.innerHTML = `⚠️ Free Plan — ${remaining} left`;
   }
-}
+};
 
 // =============================
-// 👤 SAVE USER
+// 👤 USER HANDLING
 // =============================
-function saveUser() {
-  const email = document.getElementById("email").value.trim();
+NorthSky.saveUser = function () {
+  const input = document.getElementById("email");
+  const email = input.value.trim();
 
   if (!email || !email.includes("@")) {
     alert("Enter a valid email");
     return;
   }
 
-  state.email = email;
-  localStorage.setItem("userEmail", email);
+  this.state.email = email;
+  localStorage.setItem("ns_email", email);
 
   document.getElementById("userStatus").innerText = "✅ Saved";
 
-  checkAccess();
-}
+  this.checkAccess();
+};
 
 // =============================
-// 💳 STRIPE CHECKOUT
+// 💳 CHECKOUT
 // =============================
-function goToCheckout(type = "one-time") {
-  if (!state.email) {
+NorthSky.checkout = function (type = "one-time") {
+  if (!this.state.email) {
     alert("Enter your email first");
     return;
   }
 
-  const links = {
-    "one-time": "https://buy.stripe.com/cNi6oA1eraKU7ZR1QQ2ZO0u",
-    "monthly": "https://buy.stripe.com/00w8wIg9lf1a0xpbrq2ZO0v"
-  };
-
-  const url = `${links[type]}?prefilled_email=${encodeURIComponent(state.email)}`;
+  const url = `${this.config.checkout[type]}?prefilled_email=${encodeURIComponent(this.state.email)}`;
   window.location.href = url;
-}
+};
 
 // =============================
-// 🧠 SCORE ENGINE (IMPROVED)
+// 🧠 SCORING ENGINE (IMPROVED)
 // =============================
-function calculateScore(input) {
-  let score = 55;
+NorthSky.score = function (input) {
+  let score = 50;
 
-  if (input.includes("shop") || input.includes("store")) score += 10;
-  if (input.includes("ai")) score += 5;
-  if (input.includes("https")) score += 5;
-  if (input.length > 20) score += 5;
+  const rules = [
+    { test: /shop|store/, value: 10 },
+    { test: /ai/, value: 5 },
+    { test: /https/, value: 5 },
+    { test: /.{20,}/, value: 5 }
+  ];
 
-  // simulate realism
-  score += Math.floor(Math.random() * 8);
+  rules.forEach(r => {
+    if (r.test.test(input)) score += r.value;
+  });
 
-  return Math.min(score, 92);
-}
+  // variability
+  score += Math.floor(Math.random() * 10);
+
+  return Math.min(score, 95);
+};
 
 // =============================
-// 🎬 UX DELAY
+// ⏳ DELAY (UX)
 // =============================
-function delay(ms) {
-  return new Promise(res => setTimeout(res, ms));
-}
+NorthSky.delay = ms => new Promise(res => setTimeout(res, ms));
 
 // =============================
-// 🚀 MAIN ANALYSIS
+// 🚀 MAIN ANALYSIS ENGINE
 // =============================
-async function analyzeSite() {
-  const inputRaw = document.getElementById("site").value.trim();
-  const input = inputRaw.toLowerCase();
+NorthSky.analyze = async function () {
+  const inputEl = document.getElementById("site");
   const output = document.getElementById("output");
+
+  const raw = inputEl.value.trim();
+  const input = raw.toLowerCase();
 
   if (!input) {
     output.innerText = "Enter your website URL";
     return;
   }
 
-  // 🚫 LIMIT
-  if (!state.paid && state.uses >= 3) {
+  // 🚫 LIMIT CHECK
+  if (!this.state.paid && this.state.uses >= this.config.freeLimit) {
     output.innerHTML = `
-      🚫 Free limit reached (3 analyses)<br><br>
+      🚫 Free limit reached<br><br>
 
       <div class="highlight">
-        Most users increase conversions by 30–50%
+        Most sites increase conversions 30–50%
       </div><br>
 
-      <button class="btn" onclick="goToCheckout()">
-        Unlock Full Access
+      <button class="btn" onclick="NorthSky.checkout()">
+        Unlock Full AI 🚀
       </button>
     `;
     return;
   }
 
   // increment usage
-  state.uses++;
-  localStorage.setItem("uses", state.uses);
-  updateStatus();
+  this.state.uses++;
+  localStorage.setItem("ns_uses", this.state.uses);
+  this.updateStatus();
 
   // =============================
-  // 🎬 LOADING EXPERIENCE
+  // 🎬 LOADING UX
   // =============================
   output.innerHTML = `
-    🤖 Analyzing your website...<br><br>
-    🔍 Checking SEO...
+    🤖 Running AI scan...<br><br>
+    🔍 Checking structure...
   `;
 
-  await delay(600);
-  output.innerHTML += "<br>📊 Evaluating conversions...";
-  await delay(600);
-  output.innerHTML += "<br>⚡ Generating report...<br><br>";
+  await this.delay(500);
+  output.innerHTML += "<br>📊 Analyzing conversions...";
+  await this.delay(500);
+  output.innerHTML += "<br>⚡ Building report...<br><br>";
 
-  const score = calculateScore(input);
+  const score = this.score(input);
 
   // =============================
-  // 🔒 FREE VERSION (CONVERSION OPTIMIZED)
+  // 🔒 FREE MODE (HOOK)
   // =============================
-  if (!state.paid) {
+  if (!this.state.paid) {
     output.innerHTML += `
-      <strong>📊 Website Score: ${score}/100</strong><br><br>
+      <strong>📊 Score: ${score}/100</strong><br><br>
 
-      ❌ Weak call-to-action<br>
-      ❌ Missing trust signals<br>
-      ❌ Poor headline clarity<br><br>
+      ❌ Weak CTA<br>
+      ❌ Low trust signals<br>
+      ❌ Poor messaging<br><br>
 
       <div class="highlight">
-        🔒 See exactly how to increase conversions by 30%+
+        🔒 Unlock exact fixes to boost conversions
       </div><br>
 
       <strong>${score} → ${score + 25}+ 🚀</strong><br><br>
 
-      <button class="btn" onclick="goToCheckout()">
-        Unlock Full Report ($9)
+      <button class="btn" onclick="NorthSky.checkout()">
+        Get Full Report ($9)
       </button>
     `;
     return;
   }
 
   // =============================
-  // 💰 REAL GPT BACKEND
+  // 💰 REAL AI CALL
   // =============================
   try {
     const res = await fetch("/api/analyze", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ site: inputRaw })
+      body: JSON.stringify({ site: raw })
     });
 
     const data = await res.json();
 
     output.innerHTML = `
-      <strong>📊 Real AI Analysis</strong><br><br>
+      <strong>📊 Full AI Report</strong><br><br>
       ${data.result.replace(/\n/g, "<br>")}
     `;
 
   } catch (err) {
     console.error(err);
-    output.innerHTML = "⚠️ Failed to load AI analysis";
+    output.innerHTML = "⚠️ AI analysis failed";
   }
-}
+};
+
+// =============================
+// 🔥 AUTO INIT
+// =============================
+NorthSky.init();
 </script>
