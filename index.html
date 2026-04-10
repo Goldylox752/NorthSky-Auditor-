@@ -64,7 +64,7 @@ NorthSky.updateStatus = function () {
 };
 
 // =============================
-// 👤 USER HANDLING
+// 👤 USER
 // =============================
 NorthSky.saveUser = function () {
   const email = document.getElementById("email").value.trim();
@@ -78,7 +78,6 @@ NorthSky.saveUser = function () {
   localStorage.setItem("ns_email", email);
 
   document.getElementById("userStatus").innerText = "✅ Saved";
-
   this.checkAccess();
 };
 
@@ -101,32 +100,32 @@ NorthSky.checkout = function (type = "one-time") {
 NorthSky.delay = ms => new Promise(res => setTimeout(res, ms));
 
 // =============================
-// 🚀 MAIN ANALYSIS
+// 🚀 ANALYZE
 // =============================
 NorthSky.analyze = async function () {
   const inputEl = document.getElementById("site");
   const output = document.getElementById("output");
 
-  let raw = inputEl.value.trim();
+  let site = inputEl.value.trim();
 
   // ❌ EMPTY
-  if (!raw) {
+  if (!site) {
     output.innerText = "Enter your website URL";
     return;
   }
 
   // ❌ INVALID
-  if (!raw.includes(".")) {
+  if (!site.includes(".")) {
     output.innerText = "Enter a valid website (example.com)";
     return;
   }
 
-  // 🔧 FIX URL (IMPORTANT)
-  if (!raw.startsWith("http")) {
-    raw = "https://" + raw;
+  // 🔧 AUTO FIX URL
+  if (!site.startsWith("http")) {
+    site = "https://" + site;
   }
 
-  // 🚫 LIMIT
+  // 🚫 LIMIT CHECK
   if (!this.state.paid && this.state.uses >= this.config.freeLimit) {
     output.innerHTML = `
       🚫 Free limit reached<br><br>
@@ -140,7 +139,7 @@ NorthSky.analyze = async function () {
     return;
   }
 
-  // usage
+  // increment usage
   this.state.uses++;
   localStorage.setItem("ns_uses", this.state.uses);
   this.updateStatus();
@@ -163,7 +162,7 @@ NorthSky.analyze = async function () {
     const res = await fetch("/api/analyze", {
       method: "POST",
       headers: {"Content-Type":"application/json"},
-      body: JSON.stringify({ site: raw })
+      body: JSON.stringify({ site })
     });
 
     const data = await res.json();
