@@ -1,7 +1,4 @@
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
 
   let { site } = req.body;
 
@@ -18,23 +15,21 @@ export default async function handler(req, res) {
   }
 
   // =============================
-  // 🚫 RATE LIMIT (IMPORTANT)
+  // 🚫 RATE LIMIT (REAL SECURITY)
   // =============================
   const ip = req.headers["x-forwarded-for"] || "unknown";
 
   global.calls = global.calls || {};
 
-  if (!global.calls[ip]) {
-    global.calls[ip] = 0;
-  }
+  if (!global.calls[ip]) global.calls[ip] = 0;
 
   if (global.calls[ip] > 10) {
     return res.status(429).json({
-      result: "Too many requests — try again later"
+      result: "Too many requests"
     });
   }
 
   global.calls[ip]++;
 
-  // continue with GPT + fetch...
+  // continue with fetch + GPT
 }
