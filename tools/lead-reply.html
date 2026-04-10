@@ -2,7 +2,7 @@
 let uses = localStorage.getItem('uses') || 0;
 let paid = localStorage.getItem('paid');
 
-function generateReply() {
+async function generateReply() {
   const input = document.getElementById('lead').value;
   const output = document.getElementById('output');
 
@@ -11,7 +11,7 @@ function generateReply() {
     return;
   }
 
-  // 🔒 LIMIT ONLY IF NOT PAID
+  // 🔒 LIMIT
   if (!paid && uses >= 3) {
     output.innerHTML = `
       🚫 Free limit reached<br><br>
@@ -23,11 +23,25 @@ function generateReply() {
   uses++;
   localStorage.setItem('uses', uses);
 
-  output.innerText = "Generating...";
+  output.innerText = "Thinking... 🤖";
 
-  setTimeout(() => {
-    output.innerText =
-      "Hey! Thanks for reaching out — we'd love to help. When are you available for a quick call?";
-  }, 1000);
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: input })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      output.innerText = data.reply;
+    } else {
+      output.innerText = data.error || "Something went wrong";
+    }
+
+  } catch (err) {
+    output.innerText = "Connection failed";
+  }
 }
 </script>
