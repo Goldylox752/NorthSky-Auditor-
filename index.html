@@ -49,24 +49,37 @@ h1 {
   font-size:0.9rem;
   opacity:0.8;
 }
+
+textarea{
+  width:100%;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  margin-top:10px;
+  height:100px;
+}
+
+#output{
+  margin-top:15px;
+  padding:10px;
+  background:#0f172a;
+  border-radius:8px;
+  min-height:50px;
+}
 </style>
 </head>
 
 <body>
 
-<p style="margin-top:10px;">
-💰 Businesses lose 60% of leads due to slow replies
-</p>
+<p>💰 Businesses lose 60% of leads due to slow replies</p>
 
 <h1>Stop Losing Leads — Let AI Reply Instantly (24/7)</h1>
 
-<p style="opacity:0.85; max-width:500px; margin:auto;">
+<p class="small">
 Capture, respond, and convert every lead automatically with simple AI tools.
 </p>
 
-<p style="color:#22c55e; margin-top:10px;">
-Used by 1,200+ small businesses ⚡
-</p>
+<p style="color:#22c55e;">Used by 1,200+ small businesses ⚡</p>
 
 <!-- 🚀 MAIN OFFER -->
 <div class="card">
@@ -79,24 +92,34 @@ Used by 1,200+ small businesses ⚡
   <p>✔ Replies instantly with AI</p>
   <p>✔ Converts while you sleep</p>
 
-  <!-- ✅ YOUR $99 LINK -->
   <a href="https://buy.stripe.com/cNi6oA1eraKU7ZR1QQ2ZO0u?success_url=https://north-sky-ai.vercel.app/success">
     <button class="btn">🔥 Get Instant Access</button>
   </a>
 
-  <p style="color:#22c55e; margin-top:10px;">
-    Only 27 spots left this week
-  </p>
+  <p style="color:#22c55e;">Only 27 spots left this week</p>
 </div>
 
-<!-- 💬 TOOL -->
+<!-- 💬 AI TOOL -->
 <div class="card">
-  <h3>💬 Try the AI Reply Tool</h3>
-  <p class="small">Test how fast AI can respond to your leads</p>
+  <h3>💬 AI Reply Tool</h3>
 
-  <a href="/tools/lead-reply.html">
-    <button class="btn">Try It Free</button>
-  </a>
+  <textarea id="lead" placeholder="Paste a lead message here..."></textarea>
+
+  <button onclick="generateReply()" class="btn">
+    Generate Reply
+  </button>
+
+  <div id="output"></div>
+</div>
+
+<!-- 📜 HISTORY -->
+<div class="card">
+  <h3>📜 Your Replies</h3>
+  <div id="history"></div>
+
+  <button onclick="clearHistory()" class="btn" style="margin-top:10px;">
+    Clear History
+  </button>
 </div>
 
 <!-- 💰 UPSELL -->
@@ -104,11 +127,101 @@ Used by 1,200+ small businesses ⚡
   <h3>🔓 Want Unlimited Replies?</h3>
   <p>$9 one-time</p>
 
-  <!-- ✅ YOUR $9 LINK -->
   <a href="https://buy.stripe.com/bJe7sE9KXdX63JBeDC2ZO0t?success_url=https://north-sky-ai.vercel.app/success">
     <button class="btn">Unlock Tool</button>
   </a>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  let uses = localStorage.getItem('uses') || 0;
+  let paid = localStorage.getItem('paid');
+
+  function loadHistory() {
+    const history = JSON.parse(localStorage.getItem('history')) || [];
+    const list = document.getElementById('history');
+
+    list.innerHTML = "";
+
+    history.slice().reverse().forEach(item => {
+      const div = document.createElement('div');
+      div.style.marginTop = "10px";
+      div.style.padding = "10px";
+      div.style.background = "#0f172a";
+      div.style.borderRadius = "8px";
+
+      div.innerHTML = `
+        <strong>Lead:</strong> ${item.input}<br><br>
+        <strong>Reply:</strong> ${item.reply}
+      `;
+
+      list.appendChild(div);
+    });
+  }
+
+  window.generateReply = async function() {
+    const input = document.getElementById('lead').value;
+    const output = document.getElementById('output');
+
+    if (!input) {
+      output.innerText = "Enter a message";
+      return;
+    }
+
+    if (!paid && uses >= 3) {
+      output.innerHTML = `
+        🚫 Free limit reached<br><br>
+        <a href="/" style="color:#38bdf8;">Upgrade to unlock unlimited replies</a>
+      `;
+      return;
+    }
+
+    uses++;
+    localStorage.setItem('uses', uses);
+
+    output.innerText = "Thinking... 🤖";
+
+    try {
+      const res = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: input })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        output.innerText = data.reply;
+
+        const history = JSON.parse(localStorage.getItem('history')) || [];
+
+        history.push({
+          input: input,
+          reply: data.reply
+        });
+
+        localStorage.setItem('history', JSON.stringify(history));
+
+        loadHistory();
+
+      } else {
+        output.innerText = data.error || "Error";
+      }
+
+    } catch (err) {
+      output.innerText = "Connection failed";
+    }
+  }
+
+  window.clearHistory = function() {
+    localStorage.removeItem('history');
+    location.reload();
+  }
+
+  loadHistory();
+});
+</script>
 
 </body>
 </html>
