@@ -3,130 +3,108 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>NorthSky OS — AI Auditor</title>
+<title>NorthSky Revenue OS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#05060a;
-  --card:rgba(255,255,255,0.04);
-  --border:rgba(148,163,184,0.15);
-  --accent:#38bdf8;
-  --text:#ffffff;
-  --muted:rgba(255,255,255,0.6);
-  --green:#22c55e;
-  --red:#ef4444;
-}
+* { box-sizing: border-box; }
 
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-  font-family:'Inter',sans-serif;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(56,189,248,0.10), transparent 40%),
-    radial-gradient(circle at 80% 20%, rgba(34,197,94,0.08), transparent 40%),
-    var(--bg);
-  color:var(--text);
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color: white;
 }
 
 /* NAV */
-.nav{
+.nav {
   display:flex;
   justify-content:space-between;
-  padding:18px 40px;
-  border-bottom:1px solid var(--border);
+  padding:18px 24px;
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-.logo{font-weight:700;}
+.logo { font-weight:800; }
+.badge {
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,0.2);
+  opacity:0.8;
+}
 
-.badge{
+/* HERO */
+.hero {
+  text-align:center;
+  padding:40px 20px 10px;
+}
+
+.hero h1 {
+  font-size:40px;
+  line-height:1.1;
+}
+
+.hero p {
+  opacity:0.6;
+  margin-top:10px;
+}
+
+/* GRID */
+.grid {
+  max-width:900px;
+  margin:30px auto;
+  padding:0 20px;
+  display:grid;
+  gap:14px;
+}
+
+/* CARD */
+.card {
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:16px;
+  padding:16px;
+}
+
+/* BUTTONS */
+.btn {
+  display:block;
+  margin-top:12px;
+  padding:14px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:700;
+  text-decoration:none;
+  color:black;
+  background:#22c55e;
+}
+
+.btn.blue { background:#3b82f6; color:white; }
+
+/* STATUS */
+.statusBox {
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.02);
+}
+
+.stat {
+  text-align:center;
+  flex:1;
+}
+
+.stat h3 {
   font-size:12px;
   opacity:0.6;
 }
 
-/* CONTAINER */
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:50px 20px;
-}
-
-.hero h1{font-size:38px;}
-.hero p{color:var(--muted);margin-top:6px;}
-
-.card{
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:18px;
-  margin-top:14px;
-}
-
-input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,0.25);
-  color:white;
-  margin-top:10px;
-}
-
-button{
-  width:100%;
-  padding:12px;
-  margin-top:12px;
-  border-radius:999px;
-  border:none;
-  background:var(--accent);
-  color:black;
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:hover{transform:translateY(-2px);}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin-top:16px;
-}
-
-.metric{
-  padding:14px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,0.03);
-}
-
-.metric h3{font-size:12px;color:var(--muted);}
-.metric .value{font-size:22px;font-weight:700;color:var(--green);margin-top:6px;}
-
-.output{white-space:pre-wrap;color:var(--muted);}
-
-.loading{color:var(--accent);}
-
-.status{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:8px;
-}
-
-.upgrade{
-  margin-top:10px;
-  display:none;
-}
-
-.upgrade a{
-  display:block;
-  text-align:center;
-  padding:10px;
-  border-radius:12px;
-  background:var(--red);
-  color:white;
-  text-decoration:none;
+.stat span {
+  font-size:18px;
   font-weight:700;
 }
 </style>
@@ -136,123 +114,144 @@ button:hover{transform:translateY(-2px);}
 
 <div class="nav">
   <div class="logo">NorthSky OS</div>
-  <div class="badge">AI Auditor v3</div>
+  <div class="badge" id="stageBadge">COLD TRAFFIC</div>
 </div>
 
-<div class="container">
+<div class="hero">
+  <h1>Revenue System Control Hub</h1>
+  <p>Every site feeds one unified funnel engine</p>
+</div>
 
-  <div class="hero">
-    <h1>🧠 AI Website Intelligence</h1>
-    <p>SEO • UX • Conversion scoring</p>
-  </div>
+<!-- LIVE STATUS -->
+<div class="grid">
 
-  <div class="card">
-    <input id="site" placeholder="Enter website (example.com)" />
-    <input id="email" placeholder="Email (optional)" />
+  <div class="statusBox">
+    <div class="stat">
+      <h3>USER SCORE</h3>
+      <span id="score">0</span>
+    </div>
 
-    <button onclick="analyzeSite()" id="btn">Run Audit</button>
+    <div class="stat">
+      <h3>STAGE</h3>
+      <span id="stage">COLD</span>
+    </div>
 
-    <div class="status" id="status">Free tier: 3 audits</div>
-
-    <!-- UPGRADE -->
-    <div class="upgrade" id="upgrade">
-      <a href="https://buy.stripe.com/fZu8wI2iv5qA2Fx0MM2ZO0z" target="_blank">
-        🚀 Upgrade to Pro — $29/month
-      </a>
+    <div class="stat">
+      <h3>PIPELINE</h3>
+      <span id="pipeline">ACTIVE</span>
     </div>
   </div>
 
-  <div id="output" class="card output">Ready.</div>
+  <!-- ROOFFLOW -->
+  <div class="card">
+    <h3>RoofFlow AI (Lead Engine)</h3>
+    <p style="opacity:0.6;font-size:13px;">
+      Entry point for all traffic → generates leads
+    </p>
 
-  <div id="metrics" class="grid" style="display:none;">
-    <div class="metric"><h3>SEO</h3><div class="value" id="seo">--</div></div>
-    <div class="metric"><h3>UX</h3><div class="value" id="ux">--</div></div>
-    <div class="metric"><h3>Conversion</h3><div class="value" id="conv">--</div></div>
+    <a class="btn blue"
+       onclick="trackClick('roofflow')"
+       href="https://goldylox752.github.io/RoofFlow-AI/">
+      Open RoofFlow
+    </a>
+  </div>
+
+  <!-- AI AUDITOR -->
+  <div class="card">
+    <h3>AI Auditor (Qualification Engine)</h3>
+    <p style="opacity:0.6;font-size:13px;">
+      Converts traffic into HOT / WARM / COLD leads
+    </p>
+
+    <a class="btn"
+       onclick="trackClick('auditor')"
+       href="https://north-sky-ai.vercel.app/">
+      Open Auditor
+    </a>
+  </div>
+
+  <!-- ACTION ENGINE -->
+  <div class="card">
+    <h3>Revenue Router</h3>
+    <p style="opacity:0.6;font-size:13px;">
+      Automatically pushes high-intent users into RoofFlow
+    </p>
+
+    <button class="btn blue" onclick="forceRoute()">
+      Force Route HOT Leads
+    </button>
   </div>
 
 </div>
 
 <script>
 
-const state = {
-  uses: parseInt(localStorage.getItem("ns_uses") || "0"),
-  limit: 3
-};
-
-function showUpgrade(){
-  document.getElementById("upgrade").style.display = "block";
+/* GLOBAL ID SYSTEM (shared across ALL sites later) */
+function getUser(){
+  let id = localStorage.getItem("ns_user_id");
+  if(!id){
+    id = crypto.randomUUID();
+    localStorage.setItem("ns_user_id", id);
+  }
+  return id;
 }
 
-async function analyzeSite(){
-
-  let site = document.getElementById("site").value.trim();
-  const email = document.getElementById("email").value.trim();
-
-  const output = document.getElementById("output");
-  const btn = document.getElementById("btn");
-
-  if(!site){
-    output.innerText = "Enter a website";
-    return;
-  }
-
-  if(!site.startsWith("http")){
-    site = "https://" + site;
-  }
-
-  // LIMIT CHECK
-  if(state.uses >= state.limit){
-    output.innerText = "🚫 Free limit reached — Upgrade to Pro";
-    showUpgrade();
-    return;
-  }
-
-  state.uses++;
-  localStorage.setItem("ns_uses", state.uses);
-
-  btn.disabled = true;
-  btn.innerText = "Analyzing...";
-
-  output.innerHTML = "<span class='loading'>Running audit...</span>";
-
-  try {
-
-    const res = await fetch("/api/analyze", {
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({site,email})
-    });
-
-    const data = await res.json();
-
-    if(!data.result){
-      output.innerText = "No response";
-      return;
-    }
-
-    const seo = extract(data.result,"SEO Score");
-    const ux = extract(data.result,"UX Score");
-    const conv = extract(data.result,"Conversion Score");
-
-    document.getElementById("metrics").style.display = "grid";
-    document.getElementById("seo").innerText = seo;
-    document.getElementById("ux").innerText = ux;
-    document.getElementById("conv").innerText = conv;
-
-    output.innerText = data.result;
-
-  } catch(e){
-    output.innerText = "Error running audit";
-  }
-
-  btn.disabled = false;
-  btn.innerText = "Run Audit";
+/* SCORE SYSTEM */
+function getScore(){
+  return parseInt(localStorage.getItem("ns_score") || "0");
 }
 
-function extract(text,label){
-  const match = text.match(new RegExp(label + ":\\s*(\\d+\\/\\d+)"));
-  return match ? match[1] : "--";
+function addScore(val){
+  const s = getScore() + val;
+  localStorage.setItem("ns_score", s);
+  return s;
 }
+
+/* STAGE ENGINE */
+function getStage(score){
+  if(score >= 80) return "HOT";
+  if(score >= 40) return "WARM";
+  return "COLD";
+}
+
+/* CLICK TRACKING */
+function trackClick(source){
+  const score = addScore(5);
+
+  console.log("click:", source, "score:", score);
+
+  updateUI();
+}
+
+/* FORCE ROUTING */
+function forceRoute(){
+  const score = getScore();
+
+  if(score >= 80){
+    window.location.href =
+      "https://goldylox752.github.io/RoofFlow-AI/";
+  } else {
+    alert("Not enough intent yet");
+  }
+}
+
+/* UI UPDATE */
+function updateUI(){
+
+  const score = getScore();
+  const stage = getStage(score);
+
+  document.getElementById("score").innerText = score;
+  document.getElementById("stage").innerText = stage;
+  document.getElementById("stageBadge").innerText = stage + " TRAFFIC";
+
+  localStorage.setItem("ns_stage", stage);
+}
+
+/* AUTO SCAN LOOP */
+setInterval(updateUI, 1000);
+updateUI();
+
 </script>
 
 </body>
