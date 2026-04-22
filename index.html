@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="NorthSky Revenue OS – unified funnel engine with cross-domain tracking & advanced revenue routing" />
-  <title>NorthSky OS · Revenue Intelligence Hub</title>
+  <meta name="description" content="NorthSky Revenue OS – unified funnel engine with cross-domain tracking, advanced revenue routing, and secure access." />
+  <title>NorthSky OS · Revenue Intelligence Hub (Secure)</title>
   
   <!-- Google Fonts + Font Awesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
@@ -37,14 +37,6 @@
       background-size: 32px 32px;
       pointer-events: none;
       z-index: 0;
-    }
-
-    .glass-panel {
-      background: rgba(12, 18, 38, 0.6);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(72, 187, 255, 0.18);
-      border-radius: 2rem;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
     }
 
     .container {
@@ -108,7 +100,7 @@
       margin-top: 0.6rem;
     }
 
-    /* live kpi row */
+    /* kpi row */
     .kpi-grid {
       display: flex;
       flex-wrap: wrap;
@@ -216,9 +208,6 @@
       background: #22c55e;
       color: #0a0f2a;
     }
-    .btn-warning {
-      background: #f97316;
-    }
     .btn-sm {
       padding: 0.4rem 1rem;
       font-size: 0.75rem;
@@ -227,7 +216,6 @@
       filter: brightness(1.05);
       transform: scale(0.98);
     }
-
     .flex-btns {
       display: flex;
       gap: 12px;
@@ -235,7 +223,7 @@
       margin-top: 6px;
     }
 
-    /* events log */
+    /* log section */
     .log-section {
       background: rgba(0, 0, 0, 0.35);
       border-radius: 1.5rem;
@@ -278,18 +266,150 @@
     i {
       margin-right: 4px;
     }
+
+    /* ========== SECURE PAYWALL STYLES ========== */
+    .paywall-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #030617, #000000);
+      backdrop-filter: blur(20px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.3s;
+    }
+    .paywall-card {
+      background: rgba(10, 20, 40, 0.95);
+      border-radius: 2.5rem;
+      padding: 2rem;
+      max-width: 480px;
+      width: 90%;
+      text-align: center;
+      border: 1px solid rgba(59,130,246,0.5);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+    }
+    .paywall-card i {
+      font-size: 3rem;
+      color: #3b82f6;
+      margin-bottom: 1rem;
+    }
+    .paywall-card h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+    .paywall-card p {
+      opacity: 0.7;
+      margin-bottom: 1.5rem;
+    }
+    .license-input {
+      background: #0f172a;
+      border: 1px solid #334155;
+      padding: 0.8rem 1rem;
+      width: 100%;
+      border-radius: 2rem;
+      color: white;
+      font-family: monospace;
+      margin-bottom: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .stripe-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .stripe-btn {
+      background: linear-gradient(95deg, #635bff, #0a2540);
+      width: 100%;
+      padding: 0.75rem;
+      font-weight: bold;
+      border-radius: 40px;
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.2rem 0;
+      color: #5b6e8c;
+      font-size: 0.7rem;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #334155;
+    }
+    .divider::before { margin-right: 1rem; }
+    .divider::after { margin-left: 1rem; }
+    .error-msg {
+      color: #f97316;
+      font-size: 0.75rem;
+      margin-top: 8px;
+    }
+    .main-content {
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .main-content.visible {
+      opacity: 1;
+    }
+    .secure-badge {
+      position: fixed;
+      bottom: 12px;
+      right: 16px;
+      font-size: 0.65rem;
+      background: #00000070;
+      padding: 4px 10px;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+      z-index: 99;
+      pointer-events: none;
+    }
     @media (max-width: 640px) {
       .hero h1 { font-size: 1.9rem; }
       .kpi-value { font-size: 1.4rem; }
-      .btn { padding: 0.5rem 1rem; }
+      .paywall-card { padding: 1.5rem; }
     }
   </style>
 </head>
 <body>
+
+<!-- SECURE PAYWALL OVERLAY -->
+<div id="paywallOverlay" class="paywall-overlay">
+  <div class="paywall-card">
+    <i class="fas fa-shield-alt"></i>
+    <h2>NorthSky OS · Secure Access</h2>
+    <p>Revenue intelligence suite requires verification.<br>Purchase a license or enter valid key.</p>
+    
+    <div class="stripe-buttons">
+      <button id="stripePlan1Btn" class="btn stripe-btn"><i class="fab fa-stripe"></i> Buy Access – Standard Plan</button>
+      <button id="stripePlan2Btn" class="btn stripe-btn"><i class="fab fa-stripe"></i> Buy Access – Professional Plan</button>
+      <button id="stripePlan3Btn" class="btn stripe-btn"><i class="fab fa-stripe"></i> Buy Access – Enterprise Plan</button>
+    </div>
+    
+    <div class="divider">OR ENTER LICENSE KEY</div>
+    
+    <input type="password" id="licenseKeyInput" class="license-input" placeholder="License Key (XXXX-XXXX-XXXX)" autocomplete="off">
+    <button id="unlockWithKeyBtn" class="btn" style="background: #3b82f6; width:100%;"><i class="fas fa-key"></i> Unlock with Key</button>
+    
+    <div style="font-size:0.7rem; margin-top:1rem; opacity:0.6;">Demo Key: <strong>NSKY-REV-2025</strong></div>
+    <div id="paywallError" class="error-msg"></div>
+    <div style="font-size:0.65rem; margin-top:12px; opacity:0.4;"><i class="fas fa-lock"></i> 256-bit encrypted session</div>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD (HIDDEN UNTIL UNLOCK) -->
+<div class="main-content" id="mainContent">
 <div class="container">
   <div class="nav">
     <div class="logo"><i class="fas fa-chart-line"></i> NorthSky OS</div>
-    <div class="badge" id="stageBadge">COLD TRAFFIC</div>
+    <div class="badge" id="stageBadge">SECURE</div>
   </div>
 
   <div class="hero">
@@ -357,6 +477,7 @@
       <span><i class="fas fa-sliders-h"></i> ADMIN / SCORING CONTROLS</span>
       <div>
         <button id="resetDataBtn" class="btn-sm" style="background:#ef4444;"><i class="fas fa-trash-alt"></i> Reset All Data</button>
+        <button id="revokeAccessBtn" class="btn-sm" style="background:#dc2626; margin-left:8px;"><i class="fas fa-lock"></i> Revoke Access</button>
       </div>
     </div>
     <hr>
@@ -370,10 +491,84 @@
     </div>
   </div>
 </div>
+</div>
+<div class="secure-badge"><i class="fas fa-shield-haltered"></i> Encrypted Session</div>
 
 <script>
   (function() {
-    // ---------- GLOBAL STATE ----------
+    // ---------- SECURE ACCESS CONTROL ----------
+    const SESSION_AUTH_KEY = 'nsky_auth_granted';
+    const DEMO_KEY = "NSKY-REV-2025";
+    
+    // Stripe payment links (same pricing tier)
+    const STRIPE_LINKS = {
+      plan1: 'https://buy.stripe.com/aFaeV6cX97yIfsjcvu2ZO0E',
+      plan2: 'https://buy.stripe.com/dRm28k8GTaKU1Btcvu2ZO0D',
+      plan3: 'https://buy.stripe.com/dRmfZae1d2eoeofgLK2ZO0C'
+    };
+    
+    function isAuthorized() {
+      return sessionStorage.getItem(SESSION_AUTH_KEY) === 'true';
+    }
+    
+    function grantAccess() {
+      sessionStorage.setItem(SESSION_AUTH_KEY, 'true');
+      const overlay = document.getElementById('paywallOverlay');
+      overlay.style.display = 'none';
+      document.getElementById('mainContent').classList.add('visible');
+      if (typeof addEventLog === 'function') {
+        addEventLog("🔓 Secure access granted", 0, "License verified");
+      }
+    }
+    
+    function revokeAccess() {
+      sessionStorage.removeItem(SESSION_AUTH_KEY);
+      const overlay = document.getElementById('paywallOverlay');
+      overlay.style.display = 'flex';
+      document.getElementById('mainContent').classList.remove('visible');
+      // Optionally clear any sensitive UI state
+    }
+    
+    // Check existing session on load
+    if (isAuthorized()) {
+      document.getElementById('paywallOverlay').style.display = 'none';
+      document.getElementById('mainContent').classList.add('visible');
+    } else {
+      document.getElementById('paywallOverlay').style.display = 'flex';
+      document.getElementById('mainContent').classList.remove('visible');
+    }
+    
+    // Unlock with license key
+    document.getElementById('unlockWithKeyBtn').addEventListener('click', function() {
+      const inputKey = document.getElementById('licenseKeyInput').value.trim().toUpperCase();
+      const errorDiv = document.getElementById('paywallError');
+      if (inputKey === DEMO_KEY) {
+        errorDiv.innerText = '';
+        grantAccess();
+        document.getElementById('licenseKeyInput').value = '';
+      } else {
+        errorDiv.innerText = '❌ Invalid license key. Please check or purchase a valid license.';
+        document.getElementById('licenseKeyInput').value = '';
+      }
+    });
+    
+    // Stripe buttons: open payment links in new tab
+    function openStripe(url) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+      alert("✅ Stripe checkout opened. After successful payment, you will receive a license key via email. Enter that key to unlock NorthSky OS.");
+    }
+    document.getElementById('stripePlan1Btn').addEventListener('click', () => openStripe(STRIPE_LINKS.plan1));
+    document.getElementById('stripePlan2Btn').addEventListener('click', () => openStripe(STRIPE_LINKS.plan2));
+    document.getElementById('stripePlan3Btn').addEventListener('click', () => openStripe(STRIPE_LINKS.plan3));
+    
+    // Revoke access button in admin panel
+    document.getElementById('revokeAccessBtn').addEventListener('click', function() {
+      if (confirm('⚠️ Revoking access will lock the dashboard. You will need to re-enter license key. Continue?')) {
+        revokeAccess();
+      }
+    });
+    
+    // ---------- REVENUE ENGINE LOGIC (only active when authorized) ----------
     const STORAGE_KEYS = {
       USER_ID: "ns_user_id",
       SCORE: "ns_score",
@@ -382,7 +577,6 @@
       EVENT_LOG: "ns_event_log"
     };
 
-    // helper: generate UUID
     function getUserId() {
       let id = localStorage.getItem(STORAGE_KEYS.USER_ID);
       if (!id) {
@@ -392,7 +586,6 @@
       return id;
     }
 
-    // score logic (bounded 0-100)
     function getScore() {
       let val = parseInt(localStorage.getItem(STORAGE_KEYS.SCORE) || "0");
       return isNaN(val) ? 0 : Math.min(100, Math.max(0, val));
@@ -408,7 +601,6 @@
       return setScore(updated);
     }
 
-    // revenue & conversions
     function getRevenue() {
       let rev = parseInt(localStorage.getItem(STORAGE_KEYS.REVENUE) || "0");
       return isNaN(rev) ? 0 : rev;
@@ -430,35 +622,27 @@
       return newConv;
     }
 
-    // Event log (max 25 entries)
     function getEventLog() {
       let logs = localStorage.getItem(STORAGE_KEYS.EVENT_LOG);
       if (!logs) return [];
-      try {
-        return JSON.parse(logs);
-      } catch(e) { return []; }
+      try { return JSON.parse(logs); } catch(e) { return []; }
     }
     function addEventLog(action, deltaScore = 0, extra = "") {
+      if (!isAuthorized()) return;
       let logs = getEventLog();
-      let newEntry = {
-        ts: new Date().toLocaleTimeString(),
-        action: action,
-        delta: deltaScore,
-        extra: extra,
-        scoreAfter: getScore()
-      };
+      let newEntry = { ts: new Date().toLocaleTimeString(), action: action, delta: deltaScore, extra: extra, scoreAfter: getScore() };
       logs.unshift(newEntry);
       if (logs.length > 28) logs.pop();
       localStorage.setItem(STORAGE_KEYS.EVENT_LOG, JSON.stringify(logs));
       renderEventLog();
     }
     function clearEventLog() {
+      if (!isAuthorized()) return;
       localStorage.setItem(STORAGE_KEYS.EVENT_LOG, JSON.stringify([]));
       renderEventLog();
       addEventLog("🗑️ Log cleared", 0, "manual reset");
     }
 
-    // stage resolver
     function getStage(score = null) {
       let s = (score === null) ? getScore() : score;
       if (s >= 80) return "HOT";
@@ -466,22 +650,15 @@
       return "COLD";
     }
 
-    // pipeline status: active if score > 0 else idle
-    function getPipelineStatus() {
-      return getScore() > 0 ? "ACTIVE 🔥" : "IDLE ⚡";
-    }
-
-    // force route logic (HOT leads)
     function executeRoute() {
+      if (!isAuthorized()) return;
       let score = getScore();
       if (score >= 80) {
         addEventLog("🚀 Force Route triggered (HOT)", 0, `score=${score}`);
-        // revenue + conversion simulation: routing a hot lead = closed lead value $50
         let newRevenue = addRevenue(50);
-        let newConv = addConversion(1);
+        addConversion(1);
         addEventLog("💰 CONVERSION: HOT lead routed → +$50 revenue", 0, `total $${newRevenue}`);
         updateUI();
-        // redirect to RoofFlow with cross-domain params
         redirectWithParams("https://goldylox752.github.io/RoofFlow-AI/");
       } else {
         let need = 80 - score;
@@ -491,7 +668,6 @@
       }
     }
 
-    // cross-domain redirect (preserve identity & score)
     function redirectWithParams(baseUrl) {
       const uid = getUserId();
       const currentScore = getScore();
@@ -500,35 +676,29 @@
       window.location.href = url;
     }
 
-    // universal click handler for engines (RoofFlow, Auditor)
     function handleEngineClick(source, targetUrl) {
+      if (!isAuthorized()) return;
       let oldScore = getScore();
       let newScore = addScore(5);
       addEventLog(`🔗 ${source} click`, 5, `score ${oldScore} → ${newScore}`);
       updateUI();
-      // show micro toast
       showToast(`+5 intent · ${source} engaged`, 1200);
-      // cross-domain redirect after short delay to ensure state saved
-      setTimeout(() => {
-        redirectWithParams(targetUrl);
-      }, 50);
+      setTimeout(() => { redirectWithParams(targetUrl); }, 50);
     }
 
-    // simulate high intent (+30, but capped)
     function boostIntent() {
+      if (!isAuthorized()) return;
       let before = getScore();
       let afterVal = addScore(30);
       let actualGain = afterVal - before;
       addEventLog("⚡ Intent Boost (manual)", actualGain, `new score ${afterVal}`);
       updateUI();
       showToast(`🔥 +${actualGain} intent points!`, 1800);
-      if (afterVal >= 80) {
-        showToast("🎯 STAGE UPGRADE: HOT lead — ready for routing!", 2000);
-      }
+      if (afterVal >= 80) showToast("🎯 STAGE UPGRADE: HOT lead — ready for routing!", 2000);
     }
 
-    // add/sub points admin
     function adminAddPoints(amount) {
+      if (!isAuthorized()) return;
       let oldScore = getScore();
       let newScore = addScore(amount);
       addEventLog(`🛠️ Admin ${amount>=0 ? '+' : ''}${amount} points`, amount, `${oldScore} → ${newScore}`);
@@ -537,6 +707,7 @@
     }
 
     function simulateConversionDemo() {
+      if (!isAuthorized()) return;
       let revAdded = 75;
       addRevenue(revAdded);
       addConversion(1);
@@ -545,8 +716,8 @@
       showToast(`✨ +$${revAdded} simulated revenue`, 1500);
     }
 
-    // reset everything
     function fullReset() {
+      if (!isAuthorized()) return;
       if (confirm("⚠️ RESET ALL DATA: score, revenue, logs, conversions. This cannot be undone. Continue?")) {
         localStorage.setItem(STORAGE_KEYS.SCORE, "0");
         localStorage.setItem(STORAGE_KEYS.REVENUE, "0");
@@ -558,39 +729,33 @@
       }
     }
 
-    // UI update: scores, badges, progress, revenue, stage, pipeline etc.
     function updateUI() {
+      if (!isAuthorized()) return;
       const score = getScore();
       const stage = getStage(score);
       const revenue = getRevenue();
       const conversions = getConversions();
-      const pipeline = getPipelineStatus();
-
       document.getElementById("scoreDisplay").innerText = score;
       document.getElementById("stageDisplay").innerText = stage;
       document.getElementById("revenueDisplay").innerHTML = `$${revenue}`;
       document.getElementById("convCount").innerText = conversions;
-      document.getElementById("pipelineStatus")?.remove(); // not used, but keep.
-      const progressPercent = (score / 100) * 100;
       const progressFill = document.getElementById("scoreProgress");
-      if (progressFill) progressFill.style.width = `${progressPercent}%`;
-
-      // stage badge in nav
+      if (progressFill) progressFill.style.width = `${(score / 100) * 100}%`;
       const badgeEl = document.getElementById("stageBadge");
       badgeEl.innerText = `${stage} TRAFFIC`;
       badgeEl.className = "badge";
       if (stage === "HOT") badgeEl.classList.add("hot");
       else if (stage === "WARM") badgeEl.classList.add("warm");
       else badgeEl.classList.add("cold");
-
-      // additional: we might display stage on KPI but already there
-      let stageSpan = document.getElementById("stageDisplay");
-      if (stageSpan) stageSpan.innerText = stage;
     }
 
     function renderEventLog() {
       const container = document.getElementById("eventLogContainer");
       if (!container) return;
+      if (!isAuthorized()) {
+        container.innerHTML = `<div style="opacity:0.6; text-align:center;">🔒 Unlock to view activity log</div>`;
+        return;
+      }
       const logs = getEventLog();
       if (logs.length === 0) {
         container.innerHTML = `<div style="opacity:0.6; text-align:center;">✨ no events yet — click any engine</div>`;
@@ -604,7 +769,6 @@
       `).join('');
     }
 
-    // simple toast (non-intrusive)
     let toastTimeout = null;
     function showToast(msg, duration = 1800) {
       let existingToast = document.getElementById("dynamicToast");
@@ -626,44 +790,35 @@
       toast.style.border = "1px solid rgba(255,255,255,0.2)";
       toast.style.zIndex = "9999";
       toast.style.whiteSpace = "nowrap";
-      toast.style.fontFamily = "Inter, sans-serif";
       document.body.appendChild(toast);
       if (toastTimeout) clearTimeout(toastTimeout);
       toastTimeout = setTimeout(() => { if(toast) toast.remove(); }, duration);
     }
 
-    // URL param sync (cross-domain landing)
     function syncFromUrlParams() {
       const urlParams = new URLSearchParams(window.location.search);
       let incomingScore = urlParams.get('ns_score');
       let incomingUser = urlParams.get('ns_user');
       let incomingRef = urlParams.get('ref');
-      
-      if (incomingUser) {
-        localStorage.setItem(STORAGE_KEYS.USER_ID, incomingUser);
-      }
+      if (incomingUser) localStorage.setItem(STORAGE_KEYS.USER_ID, incomingUser);
       if (incomingScore !== null) {
         let parsed = parseInt(incomingScore);
         if (!isNaN(parsed)) {
           let current = getScore();
-          // Merge: take max of current and incoming (avoid losing progress)
           let finalScore = Math.max(current, Math.min(100, parsed));
           if (finalScore !== current) {
             setScore(finalScore);
-            addEventLog("🔄 Cross-domain sync", finalScore - current, `incoming score from ${incomingRef || 'partner'}`);
-          } else {
-            // still record visit
+            if (isAuthorized()) addEventLog("🔄 Cross-domain sync", finalScore - current, `incoming from ${incomingRef || 'partner'}`);
+          } else if (isAuthorized()) {
             addEventLog("🌐 Visit from external source", 0, `ref=${incomingRef || 'unknown'}`);
           }
         }
       } else {
-        // just log normal visit
-        if (!sessionStorage.getItem("visited_initial")) {
+        if (!sessionStorage.getItem("visited_initial") && isAuthorized()) {
           addEventLog("🟢 Dashboard loaded", 0, "session start");
           sessionStorage.setItem("visited_initial", "true");
         }
       }
-      // clean URL params without reload (history replace)
       if (incomingScore || incomingUser) {
         const cleanUrl = window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
@@ -671,68 +826,42 @@
       updateUI();
     }
 
-    // auto-decay: reduce score by 1 point every 45 seconds if idle & >0
     let decayInterval = null;
     function startDecaySystem() {
       if (decayInterval) clearInterval(decayInterval);
       decayInterval = setInterval(() => {
+        if (!isAuthorized()) return;
         let current = getScore();
         if (current > 0) {
           let newScore = setScore(current - 1);
           if (newScore !== current) {
             addEventLog("⏳ Score decay (time)", -1, `now ${newScore}`);
             updateUI();
-            if (newScore < 80 && current >= 80) {
-              showToast("⚠️ Score dropped below HOT threshold", 1800);
-            }
+            if (newScore < 80 && current >= 80) showToast("⚠️ Score dropped below HOT threshold", 1800);
           }
         }
-      }, 45000); // 45 seconds
+      }, 45000);
     }
 
-    // attach event listeners
     function bindEvents() {
-      document.getElementById("roofflowBtn").addEventListener("click", () => {
-        handleEngineClick("RoofFlow AI", "https://goldylox752.github.io/RoofFlow-AI/");
-      });
-      document.getElementById("auditorBtn").addEventListener("click", () => {
-        handleEngineClick("AI Auditor", "https://north-sky-ai.vercel.app/");
-      });
-      document.getElementById("forceRouteBtn").addEventListener("click", () => {
-        executeRoute();
-      });
-      document.getElementById("simulateHighIntentBtn").addEventListener("click", () => {
-        boostIntent();
-      });
-      document.getElementById("resetDataBtn").addEventListener("click", () => {
-        fullReset();
-      });
-      document.getElementById("addPointsBtn").addEventListener("click", () => {
-        adminAddPoints(10);
-      });
-      document.getElementById("subPointsBtn").addEventListener("click", () => {
-        adminAddPoints(-5);
-      });
-      document.getElementById("simConversionBtn").addEventListener("click", () => {
-        simulateConversionDemo();
-      });
-      document.getElementById("clearLogBtn").addEventListener("click", () => {
-        clearEventLog();
-      });
+      document.getElementById("roofflowBtn").addEventListener("click", () => handleEngineClick("RoofFlow AI", "https://goldylox752.github.io/RoofFlow-AI/"));
+      document.getElementById("auditorBtn").addEventListener("click", () => handleEngineClick("AI Auditor", "https://north-sky-ai.vercel.app/"));
+      document.getElementById("forceRouteBtn").addEventListener("click", () => executeRoute());
+      document.getElementById("simulateHighIntentBtn").addEventListener("click", () => boostIntent());
+      document.getElementById("resetDataBtn").addEventListener("click", () => fullReset());
+      document.getElementById("addPointsBtn").addEventListener("click", () => adminAddPoints(10));
+      document.getElementById("subPointsBtn").addEventListener("click", () => adminAddPoints(-5));
+      document.getElementById("simConversionBtn").addEventListener("click", () => simulateConversionDemo());
+      document.getElementById("clearLogBtn").addEventListener("click", () => clearEventLog());
     }
 
-    // initial render & start
     function init() {
       bindEvents();
       syncFromUrlParams();
       updateUI();
       renderEventLog();
       startDecaySystem();
-      // refresh UI every second to catch any external changes
-      setInterval(() => {
-        updateUI();
-        renderEventLog();
-      }, 1000);
+      setInterval(() => { if(isAuthorized()) { updateUI(); renderEventLog(); } }, 1000);
     }
     init();
   })();
