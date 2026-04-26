@@ -3,23 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>RoofFlow | Exclusive Roofing Leads & Booking System</title>
+  <title>NorthSky Contractor Hub | Operations, Quotes & Revenue Control</title>
 
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     rel="stylesheet"
   />
-
-  <!-- GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-528699336"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag("js", new Date());
-    gtag("config", "G-528699336");
-  </script>
 
   <style>
     * {
@@ -46,14 +35,14 @@
       padding: 0 24px;
     }
 
-    /* ================= NAV ================= */
+    /* NAV */
 
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 28px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .logo {
@@ -73,7 +62,7 @@
       opacity: 1;
     }
 
-    /* ================= HERO ================= */
+    /* HERO */
 
     .hero {
       text-align: center;
@@ -81,7 +70,7 @@
     }
 
     .eyebrow {
-      color: #818cf8;
+      color: #22c55e;
       font-size: 14px;
       font-weight: 700;
       text-transform: uppercase;
@@ -93,14 +82,14 @@
       font-size: 54px;
       font-weight: 800;
       line-height: 1.08;
-      max-width: 900px;
+      max-width: 920px;
       margin: 0 auto 20px;
     }
 
     .hero p {
       max-width: 760px;
       margin: 0 auto;
-      color: rgba(255, 255, 255, 0.75);
+      color: rgba(255,255,255,0.75);
       font-size: 18px;
     }
 
@@ -125,23 +114,23 @@
     }
 
     .primary {
-      background: #4f46e5;
-      color: white;
+      background: #22c55e;
+      color: black;
     }
 
     .secondary {
-      border: 1px solid rgba(79, 70, 229, 0.6);
+      border: 1px solid rgba(34,197,94,0.45);
+      background: rgba(34,197,94,0.08);
       color: white;
-      background: rgba(79, 70, 229, 0.08);
     }
 
     .small {
       margin-top: 18px;
       font-size: 13px;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255,255,255,0.5);
     }
 
-    /* ================= SECTIONS ================= */
+    /* SECTIONS */
 
     .section {
       padding: 70px 0;
@@ -160,10 +149,10 @@
     .section p {
       max-width: 760px;
       margin: 0 auto;
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255,255,255,0.72);
     }
 
-    /* ================= GRID ================= */
+    /* GRID */
 
     .grid {
       display: grid;
@@ -173,8 +162,8 @@
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 18px;
       padding: 28px;
       backdrop-filter: blur(10px);
@@ -186,16 +175,16 @@
     }
 
     .card p {
-      color: rgba(255, 255, 255, 0.72);
       font-size: 15px;
+      color: rgba(255,255,255,0.72);
     }
 
     .highlight {
-      border: 1px solid rgba(79, 70, 229, 0.5);
-      background: rgba(79, 70, 229, 0.08);
+      border: 1px solid rgba(34,197,94,0.35);
+      background: rgba(34,197,94,0.08);
     }
 
-    /* ================= CTA BLOCK ================= */
+    /* CTA */
 
     .cta-block {
       text-align: center;
@@ -208,11 +197,11 @@
     }
 
     .cta-block p {
-      color: rgba(255, 255, 255, 0.72);
+      color: rgba(255,255,255,0.72);
       margin-bottom: 28px;
     }
 
-    /* ================= MOBILE ================= */
+    /* MOBILE */
 
     @media (max-width: 768px) {
       .hero h1 {
@@ -239,147 +228,149 @@
 
   <div class="container">
 
-    <!-- ================= NAV ================= -->
+    <!-- NAV -->
 
     <nav>
-      <div class="logo">RoofFlow</div>
+      <div class="logo">NorthSky Hub</div>
 
       <div class="nav-links">
         <a href="/">Home</a>
         <a href="/pricing">Pricing</a>
-        <a href="/apply">Apply</a>
-        <a href="/leads">Dashboard</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/login">Login</a>
       </div>
     </nav>
 
-    <!-- ================= HERO ================= -->
+    <!-- HERO -->
 
     <section class="hero">
       <div class="eyebrow">
-        Exclusive Roofing Lead System
+        Contractor Operations Hub
       </div>
 
       <h1>
-        We Deliver Roofing Jobs Directly Into Your Pipeline
+        Run Your Contracting Business From One Dashboard
       </h1>
 
       <p>
-        No shared leads. No cold calling. No wasted ad spend.
-        RoofFlow connects you with verified homeowners actively requesting
-        roofing estimates in your service area.
+        Quotes, leads, jobs, inspections, follow-up, and revenue —
+        managed inside one operating system built for serious contractors.
       </p>
 
       <div class="cta-row">
-        <a href="/apply" class="btn primary">
-          Apply for Territory
+        <a href="/dashboard" class="btn primary">
+          Unlock Dashboard
         </a>
 
         <a href="/pricing" class="btn secondary">
-          View Pricing
+          View Plans
         </a>
       </div>
 
       <p class="small">
-        Limited contractors per region to protect lead quality
+        Built for contractors scaling past survival mode
       </p>
     </section>
 
-    <!-- ================= PROBLEM ================= -->
+    <!-- PROBLEM -->
 
     <section class="section center">
       <h2>The Problem</h2>
 
       <p>
-        Most contractors waste thousands on shared leads, weak paid ads,
-        and unqualified homeowners. You end up fighting competitors
-        for the same low-quality job.
+        Most contractors lose revenue because operations live everywhere:
+        paper quotes, missed follow-up, scattered leads, and no clear
+        revenue visibility.
       </p>
     </section>
 
-    <!-- ================= SOLUTION ================= -->
+    <!-- SOLUTION -->
 
     <section class="section center">
-      <h2>The RoofFlow Solution</h2>
+      <h2>The NorthSky Solution</h2>
 
       <p>
-        We pre-filter, pre-qualify, and deliver only homeowners
-        actively ready for roofing estimates — so your team closes
-        faster with less wasted effort.
+        We centralize your operations into one contractor command center —
+        helping you close faster, track better, and grow predictably.
       </p>
     </section>
 
-    <!-- ================= ECOSYSTEM ================= -->
+    <!-- MODULES -->
 
     <section class="section">
       <div class="center">
-        <h2>NorthSky Revenue Ecosystem</h2>
+        <h2>Core Operating Modules</h2>
 
         <p>
-          One system built to generate, convert, and track contractor revenue
+          Everything required to manage jobs and scale revenue
         </p>
       </div>
 
       <div class="grid">
 
         <div class="card">
-          <h3>RoofFlow AI</h3>
+          <h3>Lead Manager</h3>
           <p>
-            Generates exclusive high-intent roofing leads and routes
-            them into your pipeline.
+            Track, assign, and manage incoming opportunities without losing deals.
           </p>
         </div>
 
         <div class="card">
-          <h3>Booking Engine</h3>
+          <h3>Quote Builder</h3>
           <p>
-            Converts leads into appointments and keeps follow-up
-            moving automatically.
+            Create fast professional estimates and move homeowners to yes faster.
           </p>
         </div>
 
         <div class="card">
-          <h3>Revenue OS</h3>
+          <h3>Job Pipeline</h3>
           <p>
-            Tracks close rates, performance, territory value,
-            and revenue growth.
+            Move jobs from booked → scheduled → completed with full visibility.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Revenue Dashboard</h3>
+          <p>
+            Track close rates, monthly value, territory performance, and growth.
           </p>
         </div>
 
       </div>
     </section>
 
-    <!-- ================= PROOF ================= -->
+    <!-- PROOF -->
 
     <section class="section">
       <div class="card highlight center">
         <h2 style="margin-bottom: 14px;">
-          Why Contractors Switch to RoofFlow
+          Why Contractors Stay
         </h2>
 
         <p>
-          Higher close rates. Less competition.
-          Predictable booked jobs.
-          Stronger territory protection.
+          Faster quotes. Better follow-up.
+          Cleaner operations. Higher close rates.
+          Less chaos. More revenue.
         </p>
       </div>
     </section>
 
-    <!-- ================= FINAL CTA ================= -->
+    <!-- FINAL CTA -->
 
     <section class="cta-block">
-      <h2>Ready to Claim Your Territory?</h2>
+      <h2>Ready to Operate Like a Real Business?</h2>
 
       <p>
-        Approval is limited per city and region to maintain lead exclusivity
+        Subscription access required for dashboard tools and contractor systems
       </p>
 
       <div class="cta-row">
-        <a href="/apply" class="btn primary">
-          Start Application
+        <a href="/pricing" class="btn primary">
+          Start Subscription
         </a>
 
-        <a href="/pricing" class="btn secondary">
-          See Plans
+        <a href="/login" class="btn secondary">
+          Existing Member Login
         </a>
       </div>
     </section>
